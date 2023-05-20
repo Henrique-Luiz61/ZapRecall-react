@@ -8,7 +8,7 @@ const cards = [
   { question: "Podemos colocar __ dentro do JSX", answer: "expressões" },
   {
     question: "O ReactDOM nos ajuda __",
-    answer: "Interagindo com a DOM para colocar componentes React na mesma",
+    answer: "Interagindo com DOM para incorporar componentes React",
   },
   {
     question: "Usamos o npm para __",
@@ -21,7 +21,7 @@ const cards = [
   {
     question: "Usamos estado (state) para __",
     answer:
-      "Dizer para o React quais informações quando atualizadas devem renderizar a tela novamente",
+      "Informar o React os dados para atualiza-los e renderiza-los na tela",
   },
 ];
 

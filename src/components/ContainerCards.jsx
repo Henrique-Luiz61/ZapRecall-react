@@ -1,8 +1,9 @@
 import Card from "./Card";
 import styled from "styled-components";
+import cards from "../mock.js";
 
 export default function ContainerCards({ count, setCount }) {
-  const perguntas = [
+  const perguntasFechadas = [
     { id: 1, pergunta: "Pergunta 1" },
     { id: 2, pergunta: "Pergunta 2" },
     { id: 3, pergunta: "Pergunta 3" },
@@ -15,12 +16,14 @@ export default function ContainerCards({ count, setCount }) {
 
   return (
     <SCContainerCards>
-      {perguntas.map((p) => (
+      {perguntasFechadas.map((p, i) => (
         <Card
           key={p.id}
           pergunta={p.pergunta}
           setCount={setCount}
           count={count}
+          question={cards[i].question}
+          answer={cards[i].answer}
         />
       ))}
     </SCContainerCards>
