@@ -1,14 +1,17 @@
 import Header from "./Header";
-import ContainerQuestions from "./ContainerQuestions";
+import ContainerCards from "./ContainerCards";
 import Footer from "./Footer";
 import styled from "styled-components";
+import { useState } from "react";
 
 export default function ZapRecallMain() {
+  const [count, setCount] = useState(0);
+
   return (
     <SCZapRecallMain>
       <Header />
-      <ContainerQuestions />
-      <Footer />
+      <ContainerCards count={count} setCount={setCount} />
+      <Footer count={count} setCount={setCount} />
     </SCZapRecallMain>
   );
 }

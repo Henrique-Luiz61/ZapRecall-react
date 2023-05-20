@@ -1,19 +1,16 @@
 import styled from "styled-components";
 import setaPlay from "../assets/seta_play.png";
 
-export default function Question(props) {
-  const pergunta = props.pergunta;
-  console.log(pergunta);
-
+export default function Card({ pergunta, setCount, count }) {
   return (
-    <SCQuestion>
+    <SCCard>
       <h1>{pergunta}</h1>
       <img src={setaPlay} alt="play" />
-    </SCQuestion>
+    </SCCard>
   );
 }
 
-const SCQuestion = styled.div`
+const SCCard = styled.div`
   width: 300px;
   height: 65px;
   background-color: #ffffff;
@@ -27,7 +24,6 @@ const SCQuestion = styled.div`
   h1 {
     font-size: 16px;
     font-weight: 700;
-    font-family: Arial, Helvetica, sans-serif;
     margin-left: 15px;
   }
 
