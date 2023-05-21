@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import setaPlay from "../assets/seta_play.png";
 import setaVirar from "../assets/seta_virar.png";
+import iconeCerto from "../assets/icone_certo.png";
+import iconeErro from "../assets/icone_erro.png";
+import iconeQuase from "../assets/icone_quase.png";
 import { useState } from "react";
 
 export default function Card({ pergunta, setCount, count, answer, question }) {
@@ -10,6 +13,9 @@ export default function Card({ pergunta, setCount, count, answer, question }) {
   const [displayinicial, setdinicial] = useState("flex");
   const [displayquestion, setdquestion] = useState("none");
   const [displayanswer, setdanswer] = useState("none");
+  const [status, setstatus] = useState(setaPlay);
+  const [corPergunta, setcorpergunta] = useState("#333333");
+  const [riscado, setriscado] = useState("none");
 
   function openQuestion() {
     const novaAltura = 130;
@@ -29,11 +35,47 @@ export default function Card({ pergunta, setCount, count, answer, question }) {
     setdanswer(novoDisplayAnswer);
   }
 
+  function finishQuestion(textoBotao) {
+    const novaAltura = 65;
+    setaltura(novaAltura);
+    const novaCor = "#ffffff";
+    setcor(novaCor);
+    const novoDisplayAnswer = "none";
+    setdanswer(novoDisplayAnswer);
+    const novoDisplayInicial = "flex";
+    setdinicial(novoDisplayInicial);
+
+    if (textoBotao === "Nao lembrei") {
+      const novaCorPergunta = "#FF3030";
+      setcorpergunta(novaCorPergunta);
+      const novoStatus = iconeErro;
+      setstatus(novoStatus);
+    } else if (textoBotao === "Quase lembrei") {
+      const novaCorPergunta = "#FF922E";
+      setcorpergunta(novaCorPergunta);
+      const novoStatus = iconeQuase;
+      setstatus(novoStatus);
+    } else {
+      const novaCorPergunta = "#2FBE34";
+      setcorpergunta(novaCorPergunta);
+      const novoStatus = iconeCerto;
+      setstatus(novoStatus);
+    }
+    const novoStyle = "line-through";
+    setriscado(novoStyle);
+    const novoCount = count + 1;
+    setCount(novoCount);
+  }
+
   return (
     <SCCard alturacard={alturacard} corcard={corcard}>
-      <SCCardInicial displayinicial={displayinicial}>
+      <SCCardInicial
+        displayinicial={displayinicial}
+        corPergunta={corPergunta}
+        riscado={riscado}
+      >
         <h1>{closedquestion}</h1>
-        <SCImagemPlay onClick={openQuestion} src={setaPlay} alt="play" />
+        <SCImagemPlay onClick={openQuestion} src={status} alt="play" />
       </SCCardInicial>
 
       <SCCardQuestion displayquestion={displayquestion}>
@@ -47,9 +89,13 @@ export default function Card({ pergunta, setCount, count, answer, question }) {
         </SCAnswer>
 
         <SCdivBotoes>
-          <SCBotaoNaoLembrei>Não lembrei</SCBotaoNaoLembrei>
-          <SCBotaoQuase>Quase não lembrei</SCBotaoQuase>
-          <SCBotaoZap>Zap</SCBotaoZap>
+          <SCBotaoNaoLembrei onClick={() => finishQuestion("Nao lembrei")}>
+            Não lembrei
+          </SCBotaoNaoLembrei>
+          <SCBotaoQuase onClick={() => finishQuestion("Quase lembrei")}>
+            Quase lembrei
+          </SCBotaoQuase>
+          <SCBotaoZap onClick={() => finishQuestion("Zap")}>Zap</SCBotaoZap>
         </SCdivBotoes>
       </SCCardAnswer>
     </SCCard>
@@ -74,10 +120,12 @@ const SCCardInicial = styled.div`
   display: ${(props) => props.displayinicial};
   justify-content: space-between;
   align-items: center;
+  text-decoration: ${(props) => props.riscado};
 
   h1 {
     font-size: 16px;
     font-weight: 700;
+    color: ${(props) => props.corPergunta};
   }
 `;
 
