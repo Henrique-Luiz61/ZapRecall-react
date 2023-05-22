@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
 import setaPlay from "../assets/seta_play.png";
 import setaVirar from "../assets/seta_virar.png";
 import iconeCerto from "../assets/icone_certo.png";
@@ -17,6 +17,7 @@ export default function Card({ pergunta, setCount, count, answer, question }) {
   const [corPergunta, setcorpergunta] = useState("#333333");
   const [riscado, setriscado] = useState("none");
   const [carddisabled, setcarddisabled] = useState(false);
+  const [dataTest, setData] = useState("play-btn");
 
   function openQuestion() {
     setaltura(130);
@@ -40,12 +41,15 @@ export default function Card({ pergunta, setCount, count, answer, question }) {
     if (textoBotao === "Nao lembrei") {
       setcorpergunta("#FF3030");
       setstatus(iconeErro);
+      setData("no-icon");
     } else if (textoBotao === "Quase nao lembrei") {
       setcorpergunta("#FF922E");
       setstatus(iconeQuase);
+      setData("partial-icon");
     } else {
       setcorpergunta("#2FBE34");
       setstatus(iconeCerto);
+      setData("zap-icon");
     }
     setriscado("line-through");
     const novoCount = count + 1;
@@ -62,7 +66,7 @@ export default function Card({ pergunta, setCount, count, answer, question }) {
         <h1 data-test="flashcard-text">{closedquestion}</h1>
         <button disabled={carddisabled}>
           <img
-            data-test="play-btn"
+            data-test={dataTest}
             onClick={openQuestion}
             src={status}
             alt="play"
