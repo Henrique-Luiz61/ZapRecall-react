@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export default function Footer({ count, setCount }) {
   return (
-    <SCFooter>
+    <SCFooter data-test="footer">
       <p>{count}/8 CONCLUÍDOS</p>
     </SCFooter>
   );

@@ -16,86 +16,91 @@ export default function Card({ pergunta, setCount, count, answer, question }) {
   const [status, setstatus] = useState(setaPlay);
   const [corPergunta, setcorpergunta] = useState("#333333");
   const [riscado, setriscado] = useState("none");
+  const [carddisabled, setcarddisabled] = useState(false);
 
   function openQuestion() {
-    const novaAltura = 130;
-    setaltura(novaAltura);
-    const novaCor = "#FFFFD4";
-    setcor(novaCor);
-    const novoDisplayInicial = "none";
-    setdinicial(novoDisplayInicial);
-    const novoDisplayQuestion = "flex";
-    setdquestion(novoDisplayQuestion);
+    setaltura(130);
+    setcor("#FFFFD4");
+    setdinicial("none");
+    setdquestion("flex");
   }
 
   function showAnswer() {
-    const novoDisplayQuestion = "none";
-    setdquestion(novoDisplayQuestion);
-    const novoDisplayAnswer = "flex";
-    setdanswer(novoDisplayAnswer);
+    setdquestion("none");
+    setdanswer("flex");
   }
 
   function finishQuestion(textoBotao) {
-    const novaAltura = 65;
-    setaltura(novaAltura);
-    const novaCor = "#ffffff";
-    setcor(novaCor);
-    const novoDisplayAnswer = "none";
-    setdanswer(novoDisplayAnswer);
-    const novoDisplayInicial = "flex";
-    setdinicial(novoDisplayInicial);
+    setaltura(65);
+    setcor("#ffffff");
+    setdanswer("none");
+    setdinicial("flex");
+    setcarddisabled(true);
 
     if (textoBotao === "Nao lembrei") {
-      const novaCorPergunta = "#FF3030";
-      setcorpergunta(novaCorPergunta);
-      const novoStatus = iconeErro;
-      setstatus(novoStatus);
-    } else if (textoBotao === "Quase lembrei") {
-      const novaCorPergunta = "#FF922E";
-      setcorpergunta(novaCorPergunta);
-      const novoStatus = iconeQuase;
-      setstatus(novoStatus);
+      setcorpergunta("#FF3030");
+      setstatus(iconeErro);
+    } else if (textoBotao === "Quase nao lembrei") {
+      setcorpergunta("#FF922E");
+      setstatus(iconeQuase);
     } else {
-      const novaCorPergunta = "#2FBE34";
-      setcorpergunta(novaCorPergunta);
-      const novoStatus = iconeCerto;
-      setstatus(novoStatus);
+      setcorpergunta("#2FBE34");
+      setstatus(iconeCerto);
     }
-    const novoStyle = "line-through";
-    setriscado(novoStyle);
+    setriscado("line-through");
     const novoCount = count + 1;
     setCount(novoCount);
   }
 
   return (
-    <SCCard alturacard={alturacard} corcard={corcard}>
+    <SCCard data-test="flashcard" alturacard={alturacard} corcard={corcard}>
       <SCCardInicial
         displayinicial={displayinicial}
         corPergunta={corPergunta}
         riscado={riscado}
       >
-        <h1>{closedquestion}</h1>
-        <SCImagemPlay onClick={openQuestion} src={status} alt="play" />
+        <h1 data-test="flashcard-text">{closedquestion}</h1>
+        <button disabled={carddisabled}>
+          <img
+            data-test="play-btn"
+            onClick={openQuestion}
+            src={status}
+            alt="play"
+          />
+        </button>
       </SCCardInicial>
 
       <SCCardQuestion displayquestion={displayquestion}>
-        <h1>{question}</h1>
-        <img onClick={showAnswer} src={setaVirar} alt="virar card" />
+        <h1 data-test="flashcard-text">{question}</h1>
+        <img
+          data-test="turn-btn"
+          onClick={showAnswer}
+          src={setaVirar}
+          alt="virar card"
+        />
       </SCCardQuestion>
 
       <SCCardAnswer displayanswer={displayanswer}>
         <SCAnswer>
-          <h1>{answer}</h1>
+          <h1 data-test="flashcard-text">{answer}</h1>
         </SCAnswer>
 
         <SCdivBotoes>
-          <SCBotaoNaoLembrei onClick={() => finishQuestion("Nao lembrei")}>
+          <SCBotaoNaoLembrei
+            data-test="no-btn"
+            onClick={() => finishQuestion("Nao lembrei")}
+          >
             Não lembrei
           </SCBotaoNaoLembrei>
-          <SCBotaoQuase onClick={() => finishQuestion("Quase lembrei")}>
-            Quase lembrei
+          <SCBotaoQuase
+            data-test="partial-btn"
+            onClick={() => finishQuestion("Quase nao lembrei")}
+          >
+            Quase não lembrei
           </SCBotaoQuase>
-          <SCBotaoZap onClick={() => finishQuestion("Zap")}>Zap</SCBotaoZap>
+          <SCBotaoZap data-test="zap-btn" onClick={() => finishQuestion("Zap")}>
+            Zap
+          </SCBotaoZap>
         </SCdivBotoes>
       </SCCardAnswer>
     </SCCard>
@@ -120,19 +125,25 @@ const SCCardInicial = styled.div`
   display: ${(props) => props.displayinicial};
   justify-content: space-between;
   align-items: center;
-  text-decoration: ${(props) => props.riscado};
+  text-decoration-line: ${(props) => props.riscado};
 
   h1 {
     font-size: 16px;
     font-weight: 700;
     color: ${(props) => props.corPergunta};
   }
-`;
 
-const SCImagemPlay = styled.img`
-  width: 20px;
-  height: 23px;
-  cursor: pointer;
+  img {
+    width: 20px;
+    height: 23px;
+    cursor: pointer;
+  }
+
+  button {
+    background-color: #ffffff;
+    border: none;
+    cursor: pointer;
+  }
 `;
 
 const SCCardQuestion = styled.div`
@@ -186,6 +197,7 @@ const SCBotaoNaoLembrei = styled.button`
   height: 37px;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
 `;
 
 const SCBotaoQuase = styled.button`
@@ -196,6 +208,7 @@ const SCBotaoQuase = styled.button`
   border: none;
   border-radius: 5px;
   margin: 0 5px;
+  cursor: pointer;
 `;
 
 const SCBotaoZap = styled.button`
@@ -205,4 +218,5 @@ const SCBotaoZap = styled.button`
   height: 37px;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
 `;
