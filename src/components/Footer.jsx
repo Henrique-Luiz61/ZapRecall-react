@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export default function Footer({ count, setCount }) {
+export default function Footer({ count }) {
   return (
     <SCFooter data-test="footer">
       <p>{count}/8 CONCLUÍDOS</p>
@@ -18,4 +18,10 @@ const SCFooter = styled.div`
   align-items: center;
   position: fixed;
   bottom: 0;
+
+  p {
+    font-family: "Recursive", sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+  }
 `;

@@ -51,9 +51,9 @@ export default function Card({ pergunta, setCount, count, answer, question }) {
       setstatus(iconeCerto);
       setData("zap-icon");
     }
-    setriscado("line-through");
     const novoCount = count + 1;
     setCount(novoCount);
+    setriscado("line-through");
   }
 
   return (
@@ -129,12 +129,13 @@ const SCCardInicial = styled.div`
   display: ${(props) => props.displayinicial};
   justify-content: space-between;
   align-items: center;
-  text-decoration-line: ${(props) => props.riscado};
 
   h1 {
+    font-family: "Recursive", sans-serif;
     font-size: 16px;
     font-weight: 700;
     color: ${(props) => props.corPergunta};
+    text-decoration-line: ${(props) => props.riscado};
   }
 
   img {
@@ -156,6 +157,7 @@ const SCCardQuestion = styled.div`
   justify-content: space-between;
 
   h1 {
+    font-family: "Recursive", sans-serif;
     font-size: 18px;
     font-weight: 400;
     margin-bottom: 80px;
@@ -182,6 +184,7 @@ const SCCardAnswer = styled.div`
 const SCAnswer = styled.div`
   width: 85%;
   h1 {
+    font-family: "Recursive", sans-serif;
     font-style: normal;
     font-size: 16px;
     font-weight: 400;
@@ -202,6 +205,7 @@ const SCBotaoNaoLembrei = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-family: "Recursive", sans-serif;
 `;
 
 const SCBotaoQuase = styled.button`
@@ -223,4 +227,5 @@ const SCBotaoZap = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-family: "Recursive", sans-serif;
 `;

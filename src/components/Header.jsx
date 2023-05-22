@@ -28,5 +28,6 @@ const SCHeader = styled.div`
     font-weight: 400;
     color: #ffffff;
     margin-left: 10px;
+    font-family: "Righteous";
   }
 `;
